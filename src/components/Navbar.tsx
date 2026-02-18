@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -17,7 +18,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#050505]/80 backdrop-blur-md border-b border-card-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-card-border">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
         <a href="#" className="text-xl font-bold tracking-tight">
           <span className="text-accent-light">AJ</span> SoftTech
@@ -34,6 +35,7 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
+          <ThemeToggle />
           <a
             href="#contact"
             className="bg-accent hover:bg-accent-light text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors"
@@ -43,18 +45,21 @@ export default function Navbar() {
         </div>
 
         {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-foreground"
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setOpen(!open)}
+            className="text-foreground"
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-[#050505] border-t border-card-border px-6 pb-6 pt-2">
+        <div className="md:hidden bg-background border-t border-card-border px-6 pb-6 pt-2">
           {navLinks.map((link) => (
             <a
               key={link.href}

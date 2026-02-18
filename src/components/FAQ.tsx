@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import AnimatedSection from "./AnimatedSection";
 
 const faqs = [
   {
@@ -40,44 +41,49 @@ export default function FAQ() {
   return (
     <section id="faq" className="py-24 px-6 bg-card-bg/50">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-16">
-          <span className="text-accent text-sm font-semibold uppercase tracking-widest">
-            FAQ
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold mt-3 mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-muted text-lg">
-            Got questions? We&apos;ve got answers.
-          </p>
-        </div>
+        <AnimatedSection>
+          <div className="text-center mb-16">
+            <span className="text-accent text-sm font-semibold uppercase tracking-widest">
+              FAQ
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold mt-3 mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-muted text-lg">
+              Got questions? We&apos;ve got answers.
+            </p>
+          </div>
+        </AnimatedSection>
 
         <div className="space-y-3">
           {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="border border-card-border rounded-xl overflow-hidden"
-            >
-              <button
-                onClick={() =>
-                  setOpenIndex(openIndex === index ? null : index)
-                }
-                className="w-full flex items-center justify-between p-5 text-left hover:bg-card-bg/50 transition-colors"
-              >
-                <span className="font-medium pr-4">{faq.q}</span>
-                <ChevronDown
-                  size={20}
-                  className={`text-muted flex-shrink-0 transition-transform ${
-                    openIndex === index ? "rotate-180" : ""
+            <AnimatedSection key={index} delay={0.08 * (index + 1)}>
+              <div className="border border-card-border rounded-xl overflow-hidden transition-all duration-300 hover:border-accent/30">
+                <button
+                  onClick={() =>
+                    setOpenIndex(openIndex === index ? null : index)
+                  }
+                  className="w-full flex items-center justify-between p-5 text-left hover:bg-card-bg/50 transition-colors"
+                >
+                  <span className="font-medium pr-4">{faq.q}</span>
+                  <ChevronDown
+                    size={20}
+                    className={`text-muted flex-shrink-0 transition-transform duration-300 ${
+                      openIndex === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    openIndex === index ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
                   }`}
-                />
-              </button>
-              {openIndex === index && (
-                <div className="px-5 pb-5">
-                  <p className="text-muted text-sm leading-relaxed">{faq.a}</p>
+                >
+                  <div className="px-5 pb-5">
+                    <p className="text-muted text-sm leading-relaxed">{faq.a}</p>
+                  </div>
                 </div>
-              )}
-            </div>
+              </div>
+            </AnimatedSection>
           ))}
         </div>
       </div>
